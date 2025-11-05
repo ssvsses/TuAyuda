@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aplicación Cuidado de Mayores · Borrador para Inversores</title>
+  <meta name="description" content="Plataforma que conecta cuidadores de proximidad con familias y personas mayores en entorno rural. Dossier web para inversores." />
+  <meta property="og:title" content="Aplicación Cuidado de Mayores" />
+  <meta property="og:description" content="Conectamos cuidadores cercanos con familias en pueblos. Impacto social real, modelo escalable." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og-image.jpg" />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --card: #111218;
+      --text: #e7e9ee;
+      --muted: #aeb4c0;
+      --brand: #7c5cff;
+      --brand-2: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #232632;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius-lg: 22px;
+      --maxw: 1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--maxw);margin-inline:auto;padding:24px}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.1rem;border-radius:999px;border:1px solid color-mix(in oklab, var(--brand) 30%, white 5%);background:linear-gradient(180deg, color-mix(in oklab, var(--brand) 20%, black 80%), color-mix(in oklab, var(--brand) 35%, black 65%));color:white;font-weight:600;box-shadow:var(--shadow);transition:.25s transform, .25s box-shadow, .25s opacity}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text);box-shadow:none}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);font-size:.85rem}
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:20px}
+    @media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr}.grid.cols-3{grid-template-columns:repeat(3,1fr)}.grid.cols-4{grid-template-columns:repeat(4,1fr)}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));border:1px solid var(--border);border-radius:var(--radius);padding:24px;backdrop-filter:saturate(120%) blur(6px);box-shadow:var(--shadow)}
+    header.nav{position:sticky;top:0;z-index:50;background:rgba(11,12,16,.6);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    header .wrap{display:flex;align-items:center;justify-content:space-between}
+    header nav a{padding:14px 12px;border-radius:10px;color:var(--muted)}
+    header nav a.active, header nav a:hover{color:var(--text);background:rgba(255,255,255,.04)}
+    .hero{padding:80px 0}
+    .hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.08;margin:0}
+    .hero p{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--muted);max-width:820px}
+    .hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+    .logos{opacity:.7;display:flex;gap:28px;flex-wrap:wrap}
+    .section{padding:60px 0}
+    h2.section-title{font-size:clamp(1.4rem,3.4vw,2rem);margin:0 0 12px}
+    .kpi{display:flex;align-items:baseline;gap:10px}
+    .kpi .big{font-size:2rem;font-weight:800}
+    .kpi .tag{font-size:.95rem;color:var(--muted)}
+    .list{display:grid;gap:10px}
+    .list li{display:flex;gap:10px;align-items:flex-start}
+    .list .dot{width:10px;height:10px;border-radius:999px;background:var(--brand);margin-top:.45rem}
+    .hl{color:var(--brand)}
+    .divider{height:1px;background:var(--border);margin:24px 0}
+    .timeline{position:relative;padding-left:28px}
+    .timeline:before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--border)}
+    .timeline .step{position:relative;margin:0 0 16px}
+    .timeline .step:before{content:"";position:absolute;left:-20px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--brand)}
+    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    .table th{color:var(--muted);text-align:left;font-weight:600}
+    .table td, .table th{padding:12px}
+    .pill{padding:.35rem .6rem;border-radius:999px;background:rgba(124,92,255,.15);border:1px solid color-mix(in oklab, var(--brand) 40%, white 10%)}
+    .footer{padding:40px 0;color:var(--muted);border-top:1px solid var(--border)}
+    .note{font-size:.92rem;color:var(--muted)}
+    /* Simple animated accent */
+    .glow{position:absolute;inset:auto auto -120px -120px;width:300px;height:300px;background:radial-gradient(60% 60% at 50% 50%, color-mix(in oklab, var(--brand) 40%, transparent) 0%, transparent 70%);filter:blur(14px);opacity:.45;pointer-events:none}
+    .hero-visual{position:relative;min-height:240px}
+    .hero-visual .mock{border-radius:var(--radius-lg);border:1px solid var(--border);background:linear-gradient(180deg, #0f1117, #0b0c10);padding:10px;box-shadow:var(--shadow)}
+    .hero-visual .mock .bar{height:42px;border-radius:12px;background:linear-gradient(180deg, #171922, #12131a);border:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:0 10px}
+    .dot-s{width:10px;height:10px;border-radius:999px;background:var(--brand)}
+    .tagline{display:inline-flex;gap:.5rem;align-items:center}
+    .sr-only{position:absolute;left:-9999px}
+    /* Chart styles */
+    .chart{width:100%;height:260px;background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container wrap">
+      <div class="tagline"><span class="dot-s"></span><strong>App Cuidado de Mayores</strong></div>
+      <nav aria-label="Principal">
+        <a href="#problema">Problema</a>
+        <a href="#solucion">Solución</a>
+        <a href="#mercado">Mercado</a>
+        <a href="#modelo">Modelo</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#contacto" class="pill">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="grid cols-2" style="align-items:center">
+        <div>
+          <span class="badge">Impacto social · Envejecimiento activo · Proximidad</span>
+          <h1>Conectamos <span class="hl">cuidadores cercanos</span> con familias de pueblos. <br/>Cuidados por horas o jornadas, con confianza y verificación.</h1>
+          <p>Una plataforma simple y local para resolver una necesidad creciente: asistencia a mayores en su domicilio, con perfiles verificados, valoraciones, geolocalización y gestión de reservas. Pensada para **entornos rurales** y expansión por comarcas.</p>
+          <div class="cta">
+            <a href="#resumen-inversion" class="btn" aria-label="Ver resumen para inversores">📈 Resumen inversores</a>
+            <a href="#demo" class="btn secondary" aria-label="Ver prototipo">▶️ Ver prototipo (mock)</a>
+          </div>
+          <div class="muted" style="margin-top:14px">Piloto inicial: <strong>Palma del Río (Córdoba)</strong> → expansión comarcal.</div>
+        </div>
+        <div class="hero-visual">
+          <div class="glow"></div>
+          <div class="mock">
+            <div class="bar">
+              <span class="dot-s" style="background:#ef4444"></span>
+              <span class="dot-s" style="background:#f59e0b"></span>
+              <span class="dot-s" style="background:#22c55e"></span>
+              <span class="muted" style="margin-left:8px">Prototipo — Búsqueda de cuidadores</span>
+            </div>
+            <div class="grid cols-2" style="padding:12px;gap:12px">
+              <div class="card">
+                <strong>Buscar por cercanía</strong>
+                <p class="muted">Muestra cuidadores a < 5 km, con distancia y disponibilidad.</p>
+                <div class="divider"></div>
+                <ul class="list">
+                  <li><span class="dot"></span>Filtros: horario, experiencia, precio</li>
+                  <li><span class="dot"></span>Valoración y reseñas verificadas</li>
+                  <li><span class="dot"></span>Chat y reserva segura</li>
+                </ul>
+              </div>
+              <div class="card">
+                <strong>Perfil del cuidador</strong>
+                <p class="muted">Documento de identidad validado, referencias y badges (Formación básica, Primeros auxilios, Seguro RC).</p>
+                <div class="divider"></div>
+                <div class="kpi"><span class="big">4,8★</span><span class="tag">/ 120 reseñas</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEMA / SOLUCIÓN -->
+    <section id="problema" class="section container">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2 class="section-title">El problema</h2>
+          <p class="muted">España es uno de los países más envejecidos. En pueblos y comarcas rurales la oferta formal es limitada y las familias necesitan <strong>cuidados flexibles y de confianza</strong> sin desplazamientos largos.</p>
+          <ul class="list" style="margin-top:10px">
+            <li><span class="dot"></span>Dificultad para encontrar cuidadores cercanos y disponibles</li>
+            <li><span class="dot"></span>Falta de verificación y referencia fiable</li>
+            <li><span class="dot"></span>Rigidez de residencias y alto coste</li>
+          </ul>
+        </div>
+        <div class="card" id="solucion">
+          <h2 class="section-title">Nuestra solución</h2>
+          <ul class="list">
+            <li><span class="dot"></span><strong>Marketplace local</strong> de cuidadores con geolocalización</li>
+            <li><span class="dot"></span><strong>Perfiles verificados</strong> (DNI, referencias, badges de formación)</li>
+            <li><span class="dot"></span>Reservas por horas o jornadas y <strong>pagos seguros</strong></li>
+            <li><span class="dot"></span>Sistema de <strong>valoraciones</strong> transparente</li>
+            <li><span class="dot"></span>Seguro de <strong>Responsabilidad Civil</strong> opcional</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÉTRICAS / MERCADO -->
+    <section id="mercado" class="section container">
+      <div class="grid cols-2" style="align-items:start">
+        <div class="card">
+          <h2 class="section-title">Oportunidad de mercado</h2>
+          <p class="muted">Demanda creciente de asistencia domiciliaria en el entorno rural. Mercado nacional con alto potencial de penetración por comarcas.</p>
+          <table class="table">
+            <thead><tr><th>Segmento</th><th>Usuarios potenciales</th><th>Ticket anual</th></tr></thead>
+            <tbody>
+              <tr class="card"><td>TAM (España, mayores dependientes en domicilio)</td><td>1.500.000</td><td>€600–€900</td></tr>
+              <tr class="card"><td>SAM (entorno rural + semiurbano)</td><td>450.000</td><td>€450–€700</td></tr>
+              <tr class="card"><td>SOM (10 comarcas objetivo 24–36 meses)</td><td>35.000</td><td>€400–€600</td></tr>
+            </tbody>
+          </table>
+          <p class="note">*Cifras orientativas para presentación. Se ajustarán con datos oficiales por comarca en la versión final.*</p>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Tendencia (simulación)</h2>
+          <div class="chart">
+            <canvas id="chart" width="900" height="220" aria-label="Gráfico de crecimiento simulado" role="img"></canvas>
+          </div>
+          <p class="muted" style="margin-top:8px">Crecimiento estimado de cuentas activas (piloto → expansión comarcal). Valores de ejemplo modificables en el código.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODELO DE NEGOCIO -->
+    <section id="modelo" class="section container">
+      <div class="grid cols-3">
+        <div class="card">
+          <h2 class="section-title">Modelo</h2>
+          <ul class="list">
+            <li><span class="dot"></span>Comisión por transacción (5–12%)</li>
+            <li><span class="dot"></span>Suscripción cuidador Pro (€9–€19/mes)</li>
+            <li><span class="dot"></span>Bonos familia + facturación recurrente</li>
+            <li><span class="dot"></span>Convenios con Ayuntamientos/ONG</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Go-to-Market</h2>
+          <ul class="list">
+            <li><span class="dot"></span>Piloto en Palma del Río (3–4 meses)</li>
+            <li><span class="dot"></span>Embajadores locales (farmacias, comercios)</li>
+            <li><span class="dot"></span>Campañas de confianza offline + digital</li>
+            <li><span class="dot"></span>Expansión por comarcas adyacentes</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2 class="section-title">KPIs del piloto (objetivo)</h2>
+          <ul class="list">
+            <li><span class="dot"></span>≥ 100 cuidadores verificados</li>
+            <li><span class="dot"></span>≥ 300 familias registradas</li>
+            <li><span class="dot"></span>Retención M2: ≥ 40%</li>
+            <li><span class="dot"></span>CSAT ≥ 4,6★</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACTION / DEMO -->
+    <section id="demo" class="section container">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2 class="section-title">Tracción (placeholder)</h2>
+          <p class="muted">Espacio para incluir acuerdos con entidades locales, lista de espera, encuestas de intención o resultados de un test rápido.</p>
+          <div class="divider"></div>
+          <div class="kpi"><span class="big">+ 50</span><span class="tag">cuidadores pre-registrados</span></div>
+          <div class="kpi"><span class="big">+ 120</span><span class="tag">familias interesadas</span></div>
+        </div>
+        <div class="card" id="resumen-inversion">
+          <h2 class="section-title">Resumen para inversores</h2>
+          <ul class="list">
+            <li><span class="dot"></span>Proyecto con <strong>impacto social</strong> y barreras de confianza/territorio</li>
+            <li><span class="dot"></span>Enfoque <strong>rural-first</strong> con expansión comarcal escalable</li>
+            <li><span class="dot"></span>Unidad económica positiva a partir de la comarca 3–4</li>
+            <li><span class="dot"></span>Riesgos controlados: verificación, seguros, brecha digital</li>
+          </ul>
+          <div class="divider"></div>
+          <p><strong>Uso de fondos (ejemplo 18–24 meses):</strong></p>
+          <table class="table">
+            <tbody>
+              <tr class="card"><td>Desarrollo producto (MVP → v2)</td><td>35%</td></tr>
+              <tr class="card"><td>Go-to-market local (embajadores + campañas)</td><td>30%</td></tr>
+              <tr class="card"><td>Equipo (ops + soporte)</td><td>25%</td></tr>
+              <tr class="card"><td>Legal y seguros</td><td>10%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap" class="section container">
+      <div class="card">
+        <h2 class="section-title">Roadmap</h2>
+        <div class="timeline">
+          <div class="step"><strong>Q4 2025</strong> — MVP con búsqueda por cercanía, perfiles verificados y reservas.</div>
+          <div class="step"><strong>Q1 2026</strong> — Pagos, badges de formación, soporte a familiares y farmacia colaboradora.</div>
+          <div class="step"><strong>Q2 2026</strong> — Seguro RC colectivo opcional, suscripción Pro cuidadores, métricas de calidad.</div>
+          <div class="step"><strong>Q3 2026</strong> — Expansión a 3–5 comarcas, convenios municipales.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPO / LEGAL -->
+    <section id="equipo" class="section container">
+      <div class="grid cols-2">
+        <div class="card">
+          <h2 class="section-title">Equipo</h2>
+          <div class="grid cols-2">
+            <div>
+              <strong>Raquel Aguilar Torres</strong>
+              <p class="muted">Fundadora · Palma del Río (Córdoba)<br/>Operaciones y relación con agentes locales.</p>
+            </div>
+            <div>
+              <strong>Advisors (en formación)</strong>
+              <p class="muted">Producto, salud comunitaria, legal/seguro, tecnología.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Propiedad intelectual & confidencialidad</h2>
+          <p class="muted">La idea y el contenido de este borrador pertenecen a <strong>Raquel Aguilar Torres (DNI 80159081X)</strong>, con domicilio en Palma del Río (Córdoba), constando su autoría a fecha <strong>27/10/2025</strong>. Se reserva el ejercicio de las acciones legales oportunas frente a usos no autorizados. Este documento se comparte con fines de evaluación bajo deber de confidencialidad.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="section container">
+      <div class="card">
+        <h2 class="section-title">Contacto</h2>
+        <p>¿Te interesa participar en la ronda o colaborar en el piloto?</p>
+        <div class="cta">
+          <a class="btn" href="mailto:contacto@tudominio.com?subject=Interés%20inversi%C3%B3n%20App%20Cuidado%20de%20Mayores">📩 Escribir a contacto@tudominio.com</a>
+          <a class="btn secondary" href="#" onclick="window.print();return false;">🖨️ Imprimir / Guardar PDF</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <div class="grid cols-3">
+      <div>
+        <div class="tagline"><span class="dot-s"></span><strong>App Cuidado de Mayores</strong></div>
+        <p>Conectamos cuidadores cercanos con familias en pueblos. Tecnología con impacto social real.</p>
+      </div>
+      <div>
+        <p class="muted">© <span id="year"></span> Raquel Aguilar Torres — Todos los derechos reservados.</p>
+        <p class="muted">Este borrador es informativo y no constituye oferta vinculante.</p>
+      </div>
+      <div>
+        <a class="badge" href="#resumen-inversion">Resumen inversores</a>
+        <a class="badge" href="#mercado">Datos de mercado</a>
+        <a class="badge" href="#modelo">Modelo de negocio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navegación activa
+    const links = document.querySelectorAll('header nav a');
+    const sections = [...links].map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const activate = () => {
+      let i = sections.length;
+      while(i--){
+        const s = sections[i];
+        const rect = s.getBoundingClientRect();
+        if(rect.top <= 80){
+          links.forEach(l=>l.classList.remove('active'));
+          const current = document.querySelector(`header nav a[href="#${s.id}"]`);
+          if(current) current.classList.add('active');
+          break;
+        }
+      }
+    };
+    document.addEventListener('scroll', activate, {passive:true});
+    activate();
+
+    // Gráfico simple en canvas (simulación)
+    const ctx = document.getElementById('chart').getContext('2d');
+    const data = [80, 140, 220, 360, 520, 720]; // editar
+    const labels = ['M1','M2','M3','M4','M5','M6'];
+    const w = ctx.canvas.width, h = ctx.canvas.height;
+    const pad = 36;
+    const max = Math.max(...data) * 1.15;
+    ctx.clearRect(0,0,w,h);
+    ctx.font = '12px system-ui';
+    ctx.fillStyle = 'rgba(255,255,255,.6)';
+    // grid
+    for(let i=0;i<=4;i++){
+      const y = pad + (h - pad*2) * (i/4);
+      ctx.strokeStyle = 'rgba(255,255,255,.08)';
+      ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(w-pad,y); ctx.stroke();
+    }
+    // bars
+    const bw = (w - pad*2) / data.length - 10;
+    data.forEach((v,idx)=>{
+      const x = pad + idx * ((w - pad*2)/data.length) + 5;
+      const bh = (h - pad*2) * (v/max);
+      const y = h - pad - bh;
+      const grad = ctx.createLinearGradient(0,y,0,y+bh);
+      grad.addColorStop(0,'#7c5cff');
+      grad.addColorStop(1,'#3a2bb3');
+      ctx.fillStyle = grad;
+      ctx.fillRect(x,y,bw,bh);
+      ctx.fillStyle = 'rgba(255,255,255,.7)';
+      ctx.fillText(labels[idx], x + bw/2 - 8, h - pad + 14);
+    });
+
+    // Año en footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
